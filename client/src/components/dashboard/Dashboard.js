@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import PlaidLinkButton from "react-plaid-link-button";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { logoutUser } from "../../actions/authActions";
-import { getAccounts, addAccount } from "../../actions/accountActions";
+import React, { Component } from 'react';
+import PlaidLinkButton from 'react-plaid-link-button';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { logoutUser } from '../../actions/authActions';
+import { getAccounts, addAccount } from '../../actions/accountActions';
 
-import Accounts from "./Accounts";
-import Spinner from "./Spinner";
+import Accounts from './Accounts';
+import Spinner from './Spinner';
 
 class Dashboard extends Component {
   componentDidMount() {
@@ -23,7 +23,7 @@ class Dashboard extends Component {
   handleOnSuccess = (token, metadata) => {
     const plaidData = {
       public_token: token,
-      metadata: metadata
+      metadata: metadata,
     };
 
     this.props.addAccount(plaidData);
@@ -43,26 +43,25 @@ class Dashboard extends Component {
     } else {
       // User has no accounts linked
       dashboardContent = (
-        <div className="row">
-          <div className="col s12 center-align">
+        <div className='row'>
+          <div className='col s12 center-align'>
             <h4>
-              <b>Welcome,</b> {user.name.split(" ")[0]}
+              <b>Welcome,</b> {user.name.split(' ')[0]}
             </h4>
-            <p className="flow-text grey-text text-darken-1">
+            <p className='flow-text grey-text text-darken-1'>
               To get started, link your first bank account below
             </p>
             <div>
               <PlaidLinkButton
                 buttonProps={{
                   className:
-                    "btn btn-large waves-effect waves-light hoverable blue accent-3 main-btn"
+                    'btn btn-large waves-effect waves-light hoverable blue accent-3 main-btn',
                 }}
                 plaidLinkProps={{
-                  clientName: "YOUR_APP_NAME",
-                  key: "YOUR_PUBLIC_KEY",
-                  env: "sandbox",
-                  product: ["transactions"],
-                  onSuccess: this.handleOnSuccess
+                  clientName: 'karthik ent',
+                  env: 'sandbox',
+                  product: ['transactions'],
+                  onSuccess: this.handleOnSuccess,
                 }}
                 onScriptLoad={() => this.setState({ loaded: true })}
               >
@@ -71,7 +70,7 @@ class Dashboard extends Component {
             </div>
             <button
               onClick={this.onLogoutClick}
-              className="btn btn-large waves-effect waves-light hoverable red accent-3 main-btn"
+              className='btn btn-large waves-effect waves-light hoverable red accent-3 main-btn'
             >
               Logout
             </button>
@@ -80,7 +79,7 @@ class Dashboard extends Component {
       );
     }
 
-    return <div className="container">{dashboardContent}</div>;
+    return <div className='container'>{dashboardContent}</div>;
   }
 }
 
@@ -89,15 +88,16 @@ Dashboard.propTypes = {
   getAccounts: PropTypes.func.isRequired,
   addAccount: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  plaid: PropTypes.object.isRequired
+  plaid: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  plaid: state.plaid
+  plaid: state.plaid,
 });
 
-export default connect(
-  mapStateToProps,
-  { logoutUser, getAccounts, addAccount }
-)(Dashboard);
+export default connect(mapStateToProps, {
+  logoutUser,
+  getAccounts,
+  addAccount,
+})(Dashboard);
